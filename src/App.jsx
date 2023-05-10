@@ -40,7 +40,7 @@ function PlanetSection({ planet }) {
           </Typography>
           <Typography variant="body2" style={{ fontSize: 14 }} sx={{ opacity: 0.5, marginTop: 3 }}>
   Source: <Link href={planet.overview.source} target="_blank" sx={{ color: 'white', opacity: 0.75 }}>Wikipedia</Link>{" "}
-  <img src="/public/icon-source.svg" alt="" />
+  <img src="/icon-source.svg" alt="" />
   </Typography>
         </>
       );
@@ -52,7 +52,7 @@ function PlanetSection({ planet }) {
           </Typography>
           <Typography variant="body2" style={{ fontSize: 14 }}sx={{ opacity: 0.5, marginTop: 3 }}>
            Source: <Link href={planet.structure.source} target="_blank" sx={{ color: 'white',opacity:0.75 }}>Wikipedia</Link>{" "}
-          <img src="/public/icon-source.svg" alt="" />
+          <img src="/icon-source.svg" alt="" />
           </Typography>
         </>
       );
