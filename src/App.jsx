@@ -1,34 +1,38 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import data from './data.json';
 import Navbar from './assets/components/Navbar';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Box, Button, Typography,Link } from '@mui/material';
+import { BrowserRouter as Router, Route, Routes, useNavigate, useParams, Navigate } from 'react-router-dom';
+import { Box, Button, Typography, Link } from '@mui/material';
 import { ThemeProvider } from '@mui/material';
 import theme from './theme';
 import './App.css';
 
-
 function App() {
   return (
     <ThemeProvider theme={theme}>
-    <Router>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<h1>Home</h1>} />
-        {data.map(planet => (
-          <Route
-            key={planet.name}
-            path={`/${planet.name.toLowerCase()}`}
-            element={<PlanetSection planet={planet} />}
-          />
-        ))}
-      </Routes>
-    </Router>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/:planetName" element={<PlanetSection />} />
+          <Route path="/" element={<Navigate to="/mercury" />} /> {/* Redirect to /mercury by default */}
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 }
 
-function PlanetSection({ planet }) {
+function PlanetSection() {
+  const { planetName } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!planetName) {
+      navigate("/mercury");
+    }
+  }, [planetName, navigate]);
+
+  const planet = data.find(p => p.name.toLowerCase() === planetName.toLowerCase());
+
   const [selectedSection, setSelectedSection] = useState("overview");
 
   const renderContent = () => {
@@ -64,7 +68,7 @@ function PlanetSection({ planet }) {
           </Typography>
           <Typography variant="body2" style={{ fontSize: 14 }}sx={{ opacity: 0.5, marginTop: 3 }}>
            Source: <Link href={planet.geology.source} target="_blank" sx={{ color: 'white',opacity:0.75 }}>Wikipedia</Link>{" "}
-          <img src="/public/icon-source.svg" alt="" />
+          <img src="/icon-source.svg" alt="" />
           </Typography>
         </>
       );
